@@ -12,21 +12,31 @@ import {
     MenuItem,
     MenuItemTitle,
     DropDownHandler,
+    Mask,
 } from "./Navbar.style";
+import ShoppingBag from "./ShoppingBag";
 
 export default class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
             dropdownVisible: false,
+            shoppingBagVisible: false,
         };
 
+        this.cartIconRef = React.createRef();
+        this.shoppingBagRef = React.createRef();
         this.DropDownCurrenciesRef = React.createRef();
+        this.DropDownHandlerRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
-    toggleCurrencyDialog() {
-        this.setState({ dropdownVisible: !this.state.dropdownVisible });
+    toggleCurrencyDialogVisibility() {
+        this.setState({ dropdownVisible: !this.state.dropdownVisible, shoppingBagVisible: false });
+    }
+
+    toggleShoppingBagVisibility() {
+        this.setState({ shoppingBagVisible: !this.state.shoppingBagVisible, dropdownVisible: false });
     }
 
     componentDidMount() {
@@ -38,12 +48,23 @@ export default class Navbar extends Component {
     }
 
     /**
-     * Hide the currency dialog box if clicked on outside of element
+     * Hide the currency dialog box if clicked on outside of Currency dialog and the dropdown handler
      */
     handleClickOutside(event) {
         if (this.DropDownCurrenciesRef.current)
-            if (!this.DropDownCurrenciesRef.current.contains(event.target)) {
-                this.toggleCurrencyDialog();
+            if (
+                !this.DropDownCurrenciesRef.current.contains(event.target) &&
+                !this.DropDownHandlerRef.current.contains(event.target)
+            ) {
+                this.setState({ dropdownVisible: false });
+            }
+
+        if (this.shoppingBagRef.current)
+            if (
+                !this.shoppingBagRef.current.contains(event.target) &&
+                !this.cartIconRef.current.contains(event.target)
+            ) {
+                this.setState({ shoppingBagVisible: false });
             }
     }
 
@@ -67,17 +88,28 @@ export default class Navbar extends Component {
                     </LogoContainer>
                     <Actions>
                         <DropDownHandler
-                            onClick={() => this.toggleCurrencyDialog()}
+                            onClick={() => this.toggleCurrencyDialogVisibility()}
                             dropdownVisible={this.state.dropdownVisible}
+                            ref={this.DropDownHandlerRef}
                         >
                             $
                         </DropDownHandler>
-                        <CartIcon count={0} />
+                        <CartIcon
+                            onClick={() => this.toggleShoppingBagVisibility()}
+                            count={0}
+                            innerRef={this.cartIconRef}
+                        />
                     </Actions>
                 </Wrapper>
                 <ErrorBoundary message="An error occurs with the currency list">
                     {this.state.dropdownVisible && <DropDownCurrencies innerRef={this.DropDownCurrenciesRef} />}
                 </ErrorBoundary>
+
+                <ErrorBoundary message="An error occurs wuth the shooping bag">
+                    {this.state.shoppingBagVisible && <ShoppingBag innerRef={this.shoppingBagRef} />}
+                </ErrorBoundary>
+
+                {this.state.shoppingBagVisible && <Mask />}
             </Container>
         );
     }

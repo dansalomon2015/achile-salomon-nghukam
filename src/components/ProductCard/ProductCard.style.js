@@ -3,8 +3,7 @@ import { Colors } from "../../utils";
 
 export const Card = styled.div`
     position: relative;
-    padding-top: 14px;
-    padding-inline: 14px;
+    padding: 14px;
     max-width: 350px;
     margin-top: 100px;
     /* border: 1px solid black; */
@@ -18,15 +17,15 @@ export const ProductImage = styled.img`
     height: auto;
 `;
 
-export const ProductName = styled.p`
+export const ProductName = styled.span`
     font-size: 18px;
     line-height: 160%;
     font-weight: 300;
 `;
 
-export const ProductPrice = styled.p`
+export const ProductPrice = styled.span`
     font-size: 16px;
-    line-height: 100%;
+    line-height: 160%;
     font-weight: 500;
 `;
 
@@ -50,4 +49,10 @@ export const AddToCardIcon = styled.div`
 export const CartIcon = styled.img`
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(323deg) brightness(102%) contrast(101%);
     width: 24px;
+`;
+
+export const ProductInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 `;

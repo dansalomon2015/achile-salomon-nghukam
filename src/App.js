@@ -6,6 +6,7 @@ import { Colors } from "./utils";
 const Container = styled.div`
     padding-inline: 80px;
     background-color: ${Colors.bg_white};
+    margin-top: 100px;
 `;
 
 export default class App extends Component {

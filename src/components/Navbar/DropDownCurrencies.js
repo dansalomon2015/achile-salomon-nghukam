@@ -27,6 +27,7 @@ const Container = styled.div`
     width: 114px;
     -webkit-box-shadow: 5px 5px 32px 3px rgba(0, 0, 0, 0.05);
     box-shadow: 5px 5px 32px 3px rgba(0, 0, 0, 0.05);
+    z-index: 101;
 `;
 
 const CurrencyItem = styled.div`

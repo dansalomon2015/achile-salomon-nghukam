@@ -27,9 +27,9 @@ const Counter = styled.div`
 
 export default class CartIcon extends Component {
     render() {
-        const { count } = this.props;
+        const { count, onClick, innerRef } = this.props;
         return (
-            <Container>
+            <Container onClick={onClick} ref={innerRef}>
                 <img width={20} src={Images.Cart} alt="Cart icon" />
                 {!!count && <Counter>{count}</Counter>}
             </Container>
