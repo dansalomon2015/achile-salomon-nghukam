@@ -1,22 +1,15 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
 import { Images } from "../../assets";
+import { selecteCategory } from "../../store";
+import { Constants } from "../../utils";
 import ErrorBoundary from "../ErrorBoundary";
 import CartIcon from "./CartIcon";
-import DropDownCurrencies from "./DropDownCurrencies";
-import {
-    Container,
-    Wrapper,
-    Menu,
-    LogoContainer,
-    Actions,
-    MenuItem,
-    MenuItemTitle,
-    DropDownHandler,
-    Mask,
-} from "./Navbar.style";
+import DropDownHandler from "./DropDownHandler";
+import { Container, Wrapper, Menu, LogoContainer, Actions, MenuItem, MenuItemTitle, Mask } from "./Navbar.style";
 import ShoppingBag from "./ShoppingBag";
 
-export default class Navbar extends Component {
+class Navbar extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -69,41 +62,51 @@ export default class Navbar extends Component {
     }
 
     render() {
+        const { categories, category } = this.props;
         return (
             <Container>
                 <Wrapper>
-                    <Menu>
-                        <MenuItem active>
-                            <MenuItemTitle active>WOMEN</MenuItemTitle>
-                        </MenuItem>
-                        <MenuItem>
-                            <MenuItemTitle>MEN</MenuItemTitle>
-                        </MenuItem>
-                        <MenuItem>
-                            <MenuItemTitle>KIDS</MenuItemTitle>
-                        </MenuItem>
-                    </Menu>
-                    <LogoContainer>
+                    {categories && (
+                        <Menu>
+                            {categories.map((c, index) => {
+                                return (
+                                    <MenuItem
+                                        key={index + 1}
+                                        active={c.name === category.name}
+                                        onClick={() => {
+                                            this.props.dispatch(selecteCategory(c));
+                                            if (!(window.location.href.split(Constants.rootURL)[1] === "/"))
+                                                window.location = "/";
+                                        }}
+                                    >
+                                        <MenuItemTitle active={c.name === category.name}>{c.name}</MenuItemTitle>
+                                    </MenuItem>
+                                );
+                            })}
+                        </Menu>
+                    )}
+                    <LogoContainer
+                        onClick={() => {
+                            window.location = "/";
+                        }}
+                    >
                         <img src={Images.Logo} alt="logo" />
                     </LogoContainer>
                     <Actions>
                         <DropDownHandler
                             onClick={() => this.toggleCurrencyDialogVisibility()}
                             dropdownVisible={this.state.dropdownVisible}
-                            ref={this.DropDownHandlerRef}
-                        >
-                            $
-                        </DropDownHandler>
+                            innerRef={this.DropDownHandlerRef}
+                            dropDownRef={this.DropDownCurrenciesRef}
+                        />
+
                         <CartIcon
                             onClick={() => this.toggleShoppingBagVisibility()}
-                            count={0}
+                            count={this.props.cart.length}
                             innerRef={this.cartIconRef}
                         />
                     </Actions>
                 </Wrapper>
-                <ErrorBoundary message="An error occurs with the currency list">
-                    {this.state.dropdownVisible && <DropDownCurrencies innerRef={this.DropDownCurrenciesRef} />}
-                </ErrorBoundary>
 
                 <ErrorBoundary message="An error occurs wuth the shooping bag">
                     {this.state.shoppingBagVisible && <ShoppingBag innerRef={this.shoppingBagRef} />}
@@ -114,3 +117,14 @@ export default class Navbar extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        categories: state.mystore.categories,
+        currency: state.mystore.currency,
+        category: state.mystore.category,
+        cart: state.mystore.cart,
+    };
+};
+
+export default connect(mapStateToProps)(Navbar);

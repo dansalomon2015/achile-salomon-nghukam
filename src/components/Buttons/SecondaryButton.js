@@ -23,7 +23,7 @@ const Button = styled.div`
 
 export default class SecondaryButton extends Component {
     render() {
-        const { title, onClick } = this.props;
-        return <Button onClick={onClick}>{title}</Button>;
+        const { title, onClick, children } = this.props;
+        return <Button onClick={onClick}>{title ? title : children}</Button>;
     }
 }

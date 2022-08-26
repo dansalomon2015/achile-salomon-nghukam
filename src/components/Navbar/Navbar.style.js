@@ -30,6 +30,7 @@ export const LogoContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 `;
 export const Actions = styled.div`
     width: 40%;
@@ -48,6 +49,7 @@ export const MenuItem = styled.div`
     align-items: center;
     padding-inline: 16px;
     border-bottom: ${(props) => (props.active ? `2px solid ${Colors.primary}` : null)};
+    cursor: pointer;
 `;
 
 export const MenuItemTitle = styled.span`
@@ -55,28 +57,8 @@ export const MenuItemTitle = styled.span`
     color: ${(props) => (props.active ? Colors.primary : Colors.dark)};
     font-weight: ${(props) => (props.active ? "600" : "normal")};
     line-height: 19.2px;
-`;
-
-export const DropDownHandler = styled.div`
-    padding-inline: 10px;
-    margin-right: 10px;
-    font-size: 18px;
-    font-weight: 500;
+    text-transform: uppercase;
     cursor: pointer;
-    &::after {
-        position: relative;
-        content: "";
-        display: inline-block;
-        width: 5px;
-        height: 5px;
-        border-right: 1px solid ${Colors.dark};
-        border-top: 1px solid ${Colors.dark};
-        transform: ${(props) => (props.dropdownVisible ? `rotate(${-45}deg)` : `rotate(${135}deg)`)};
-        margin-left: 10px;
-        top: ${(props) => (props.dropdownVisible ? `10px` : `5px`)};
-    }
-    display: flex;
-    justify-content: center;
 `;
 
 export const Mask = styled.div`
@@ -97,7 +79,7 @@ export const ShoppingBagContainer = styled.div`
     background-color: ${Colors.bg_white};
     padding-top: 25px;
     padding-bottom: 25px;
-    padding-inline: 14px;
+    /* padding-inline: 14px; */
     position: fixed;
     top: 65px;
     right: 70px;
@@ -112,6 +94,7 @@ export const ShoppingBagBody = styled.div`
     display: flex;
     margin-top: 24px;
     align-items: center;
+    padding-inline: 14px;
 `;
 
 export const MyBagText = styled.span`
@@ -131,7 +114,7 @@ export const NbrOfItemText = styled.span`
 
 export const ItemDetails = styled.div`
     width: 130px;
-    margin-right: 20px;
+    margin-right: 40px;
     display: flex;
     flex-direction: column;
 `;
@@ -149,19 +132,6 @@ export const QtyContainer = styled.div`
     flex-direction: column;
     margin-right: 14px;
     height: 180px;
-`;
-
-export const QtyButton = styled.button`
-    background-color: ${Colors.bg_white};
-    border: 1px solid ${Colors.dark};
-    width: 24px;
-    height: 24px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    font-size: 20px;
-    cursor: pointer;
-    color: ${Colors.dark};
 `;
 
 export const Qty = styled.span`
@@ -206,20 +176,6 @@ export const Section = styled.div`
     margin-bottom: 8px;
 `;
 
-export const ButtonSizes = styled.button`
-    background-color: ${(props) => (props.selected ? Colors.dark : Colors.bg_white)};
-    border: 1px solid ${Colors.dark};
-    width: 24px;
-    height: 24px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    font-size: 12px;
-    cursor: pointer;
-    margin-right: 8px;
-    color: ${(props) => (props.selected ? Colors.text_white : Colors.dark)};
-`;
-
 export const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -240,5 +196,50 @@ export const Total = styled.span`
     font-weight: bold;
     font-size: 16px;
     line-height: 160%;
+    color: ${Colors.dark};
+`;
+
+export const TotalText = styled.span`
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 160%;
+    font-family: "Roboto";
+    color: ${Colors.dark};
+`;
+
+export const BrandName = styled.span`
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 27px;
+    color: ${Colors.dark};
+`;
+
+export const ShoppingBagList = styled.div`
+    max-height: 500px;
+    overflow-y: scroll;
+    width: 100%;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+`;
+
+export const Content = styled.div`
+    padding-inline: 14px;
+`;
+
+export const NoItems = styled.div`
+    margin-top: 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 // -----------------------------------------------

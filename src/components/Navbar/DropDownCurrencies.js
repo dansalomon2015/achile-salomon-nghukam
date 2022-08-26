@@ -1,21 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Colors } from "../../utils";
-
-const currencies = [
-    {
-        sign: "$",
-        name: "USD",
-    },
-    {
-        sign: "€",
-        name: "EUR",
-    },
-    {
-        sign: "¥",
-        name: "JPY",
-    },
-];
+import CurrencyItem from "./CurrencyItem";
 
 const Container = styled.div`
     background-color: ${Colors.bg_white};
@@ -30,28 +16,35 @@ const Container = styled.div`
     z-index: 101;
 `;
 
-const CurrencyItem = styled.div`
-    font-weight: 500;
-    font-size: 18px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 20px;
-    padding-right: 20px;
-    background-color: ${(props) => (props.selected ? Colors.bg_grey : Colors.bg_white)};
-`;
+export default class DropDownCurrencies extends PureComponent {
+    getSelectedIndex = () => {
+        const { selected, currencies } = this.props;
+        let output = 0;
+        if (selected) {
+            for (let index = 0; index < currencies.length; index++) {
+                const c = currencies[index];
+                if (c.label === selected.label) {
+                    output = index;
+                    break;
+                }
+            }
+        }
 
-export default class DropDownCurrencies extends Component {
+        return output;
+    };
+
     render() {
-        return (
-            <Container ref={this.props.innerRef}>
-                {currencies.map((e, i) => {
-                    return (
-                        <CurrencyItem key={i + 1} selected={i === 1 ? true : false}>
-                            {e.sign} {e.name}
-                        </CurrencyItem>
-                    );
-                })}
-            </Container>
-        );
+        const { visible, innerRef, currencies } = this.props;
+
+        if (visible && currencies)
+            return (
+                <Container ref={innerRef}>
+                    {currencies.map((e, i) => {
+                        return <CurrencyItem key={i + 1} selected={i === this.getSelectedIndex()} item={e} />;
+                    })}
+                </Container>
+            );
+
+        return null;
     }
 }

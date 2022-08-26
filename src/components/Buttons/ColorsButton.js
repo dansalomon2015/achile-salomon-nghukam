@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Colors } from "../../utils";
 
 const Container = styled.div`
-    width: 20px;
+    min-width: 20px;
     height: 20px;
     padding: 2px;
     border-width: 1px;
@@ -20,9 +20,9 @@ const Color = styled.div`
 
 export default class ColorsButton extends Component {
     render() {
-        const { color, selected } = this.props;
+        const { color, selected, onClick } = this.props;
         return (
-            <Container selected={selected}>
+            <Container selected={selected} onClick={onClick}>
                 <Color bgColor={color} />
             </Container>
         );

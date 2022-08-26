@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import { Images } from "../../assets";
-import { Colors } from "../../utils";
-import PrimaryButton from "../Buttons/PrimaryButton";
-import SecondaryButton from "../Buttons/SecondaryButton";
-import ColorsButton from "./ColorsButton";
+import { Link } from "react-router-dom";
+import { PrimaryButton, SecondaryButton, ColorsButton, QtyButton, ButtonSizes } from "../Buttons";
 import {
     ItemDetails,
     NbrOfItemText,
@@ -12,38 +9,94 @@ import {
     ShoppingBagContainer,
     ItemName,
     QtyContainer,
-    QtyButton,
     Qty,
     ItemImgContainer,
     ItemPrice,
     SectionTitle,
     Section,
-    ButtonSizes,
     ButtonsContainer,
     TotalContainer,
     Total,
+    TotalText,
+    ShoppingBagList,
+    Content,
+    NoItems,
 } from "./Navbar.style";
+import { connect } from "react-redux";
+import { decrementQty, incrementQty, updateAttribute } from "../../store";
 
-const sizes = ["XS", "S", "M", "L"];
+class ShoppingBag extends Component {
+    decrement = (itemIndex) => {
+        const { dispatch } = this.props;
+        dispatch(decrementQty(itemIndex));
+    };
+    increment = (itemIndex) => {
+        const { dispatch } = this.props;
+        dispatch(incrementQty(itemIndex));
+    };
 
-export default class ShoppingBag extends Component {
+    getTotal() {
+        let total = 0;
+        const { cart } = this.props;
+        cart.forEach((item) => {
+            total += this.getPrice(item) * item.qty;
+        });
+        return Math.round(total * 100) / 100;
+    }
+
+    getPrice(item) {
+        const { prices } = item;
+        const { currency } = this.props;
+        if (!currency) return "";
+        return prices.find((p) => p.currency.label === currency.label).amount;
+    }
+
+    updateItemAttribute = (attrName, value, index) => {
+        this.props.dispatch(updateAttribute({ attrName, value, productIndex: index }));
+    };
+
     render() {
+        const { cart, currency } = this.props;
         return (
             <ShoppingBagContainer ref={this.props.innerRef}>
-                <MyBagText>My Bag</MyBagText>
-                <NbrOfItemText>3 items</NbrOfItemText>
-                <ShoppingBagItem />
-                <ShoppingBagItem />
+                <Content>
+                    <MyBagText>My Bag</MyBagText>
+                    <NbrOfItemText>{cart.length} items</NbrOfItemText>
+                </Content>
+                <ShoppingBagList>
+                    {cart.map((item, index) => {
+                        return (
+                            <ShoppingBagItem
+                                {...item}
+                                key={index + 1}
+                                increment={() => this.increment(index)}
+                                decrement={() => this.decrement(index)}
+                                price={this.getPrice(item)}
+                                currency={currency}
+                                updateItemAttribute={(attrName, value) => {
+                                    this.updateItemAttribute(attrName, value, index);
+                                }}
+                            />
+                        );
+                    })}
+                </ShoppingBagList>
+                {!cart.length && <NoItems>No items in your cart.</NoItems>}
+                <Content>
+                    <TotalContainer>
+                        <TotalText>Total</TotalText>
+                        <Total>
+                            {currency ? currency.symbol : ""}
+                            {this.getTotal()}
+                        </Total>
+                    </TotalContainer>
 
-                <TotalContainer>
-                    <Total>Total</Total>
-                    <Total>$200</Total>
-                </TotalContainer>
-
-                <ButtonsContainer>
-                    <SecondaryButton title="View bag" />
-                    <PrimaryButton title="CHECKOUT" />
-                </ButtonsContainer>
+                    <ButtonsContainer>
+                        <SecondaryButton>
+                            <Link to={"/cart"}>View bag</Link>
+                        </SecondaryButton>
+                        <PrimaryButton title="CHECKOUT" />
+                    </ButtonsContainer>
+                </Content>
             </ShoppingBagContainer>
         );
     }
@@ -53,49 +106,72 @@ class ShoppingBagItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            qty: 1,
             size: "S",
         };
     }
 
-    decrement = () => this.setState({ qty: this.state.qty > 0 ? this.state.qty - 1 : 0 });
-    increment = () => this.setState({ qty: this.state.qty + 1 });
+    getAttributeValue = (value) => {
+        return this.props[value];
+    };
 
     render() {
+        const { currency, qty, price, increment, decrement, attributes, gallery, updateItemAttribute } = this.props;
         return (
             <ShoppingBagBody>
                 <ItemDetails>
-                    <ItemName>Apollo Running Short</ItemName>
-                    <ItemPrice>$50.00</ItemPrice>
-                    <SectionTitle>Size</SectionTitle>
-                    <Section>
-                        {sizes.map((s, index) => {
-                            return (
-                                <ButtonSizes
-                                    selected={s === this.state.size}
-                                    key={index}
-                                    onClick={() => this.setState({ size: s })}
-                                >
-                                    {s}
-                                </ButtonSizes>
-                            );
-                        })}
-                    </Section>
+                    <ItemName>Apollo</ItemName>
+                    <ItemName>Running Short</ItemName>
+                    <ItemPrice>
+                        {currency ? currency.symbol : ""}
+                        {price}
+                    </ItemPrice>
 
-                    <SectionTitle>Color</SectionTitle>
-                    <Section>
-                        <ColorsButton selected color={Colors.bg_grey} />
-                        <ColorsButton color={Colors.dark} />
-                        <ColorsButton color={Colors.green} />
-                    </Section>
+                    {attributes.map((attribute, i) => {
+                        return (
+                            <div key={i + 1}>
+                                <SectionTitle>{attribute.name}</SectionTitle>
+                                <Section>
+                                    {attribute.items.map((item, j) => {
+                                        if (attribute.type === "swatch")
+                                            return (
+                                                <ColorsButton
+                                                    key={j + 1}
+                                                    color={item.value}
+                                                    selected={item.value === this.getAttributeValue(attribute.name)}
+                                                    onClick={() => updateItemAttribute(attribute.name, item.value)}
+                                                />
+                                            );
+                                        return (
+                                            <ButtonSizes
+                                                selected={item.value === this.getAttributeValue(attribute.name)}
+                                                key={j + 1}
+                                                onClick={() => updateItemAttribute(attribute.name, item.value)}
+                                            >
+                                                {item.value}
+                                            </ButtonSizes>
+                                        );
+                                    })}
+                                </Section>
+                            </div>
+                        );
+                    })}
                 </ItemDetails>
                 <QtyContainer>
-                    <QtyButton onClick={this.increment}>+</QtyButton>
-                    <Qty>{this.state.qty}</Qty>
-                    <QtyButton onClick={this.decrement}>-</QtyButton>
+                    <QtyButton onClick={increment}>+</QtyButton>
+                    <Qty>{qty}</Qty>
+                    <QtyButton onClick={decrement}>-</QtyButton>
                 </QtyContainer>
-                <ItemImgContainer src={Images.Dress} />
+                <ItemImgContainer src={gallery[0]} />
             </ShoppingBagBody>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        cart: state.mystore.cart,
+        currency: state.mystore.currency,
+    };
+};
+
+export default connect(mapStateToProps)(ShoppingBag);

@@ -4,7 +4,7 @@ import { Colors } from "../../utils";
 export const Card = styled.div`
     position: relative;
     padding: 14px;
-    max-width: 350px;
+    max-width: 390px;
     margin-top: 100px;
     /* border: 1px solid black; */
     &:hover {
@@ -39,7 +39,7 @@ export const AddToCardIcon = styled.div`
     background-color: ${Colors.primary};
     position: absolute;
     right: 30px;
-    bottom: 78px;
+    bottom: 70px;
     #card:hover & {
         display: flex;
     }
@@ -55,4 +55,13 @@ export const ProductInfo = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+`;
+
+export const ImgContainer = styled.div`
+    background-image: ${(props) => `url("${props.src}")`};
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 350px;
+    height: 330px;
 `;
