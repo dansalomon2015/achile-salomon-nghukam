@@ -11,6 +11,7 @@ export const Card = styled.div`
         -webkit-box-shadow: 10px 5px 33px 5px rgba(0, 0, 0, 0.22);
         box-shadow: 10px 5px 33px 5px rgba(0, 0, 0, 0.22);
     }
+    cursor: pointer;
 `;
 
 export const ProductImage = styled.img`

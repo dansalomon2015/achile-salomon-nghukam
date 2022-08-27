@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Images } from "../../assets";
 import { selecteCategory } from "../../store";
-import { Constants } from "../../utils";
 import ErrorBoundary from "../ErrorBoundary";
 import CartIcon from "./CartIcon";
 import DropDownHandler from "./DropDownHandler";
@@ -75,22 +75,24 @@ class Navbar extends PureComponent {
                                         active={c.name === category.name}
                                         onClick={() => {
                                             this.props.dispatch(selecteCategory(c));
-                                            if (!(window.location.href.split(Constants.rootURL)[1] === "/"))
-                                                window.location = "/";
                                         }}
                                     >
-                                        <MenuItemTitle active={c.name === category.name}>{c.name}</MenuItemTitle>
+                                        <MenuItemTitle active={c.name === category.name}>
+                                            <Link to={"/"}>{c.name}</Link>
+                                        </MenuItemTitle>
                                     </MenuItem>
                                 );
                             })}
                         </Menu>
                     )}
-                    <LogoContainer
-                        onClick={() => {
-                            window.location = "/";
-                        }}
-                    >
-                        <img src={Images.Logo} alt="logo" />
+                    <LogoContainer>
+                        <Link
+                            to={{
+                                pathname: "/",
+                            }}
+                        >
+                            <img src={Images.Logo} alt="logo" />
+                        </Link>
                     </LogoContainer>
                     <Actions>
                         <DropDownHandler

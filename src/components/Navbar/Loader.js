@@ -32,7 +32,6 @@ class Loader extends Component {
     }
 
     componentDidMount() {
-        console.log("Loader is mounted");
         getCurrencies()
             .then((data) => {
                 if (Array.isArray(data.currencies)) {

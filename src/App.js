@@ -4,8 +4,7 @@ import { PersistGate } from "reduxjs-toolkit-persist/integration/react";
 import { persistor, store } from "./store";
 import { Colors } from "./utils";
 import styled from "styled-components";
-import { Home } from "./pages";
-import { Cart } from "./pages";
+import { Home, ProductDetails, Cart } from "./pages";
 import { Provider } from "react-redux";
 
 const Container = styled.div`
@@ -24,6 +23,7 @@ export default class App extends Component {
                             <Routes>
                                 <Route path="/" element={<Home />} />
                                 <Route path="/cart" element={<Cart />} />
+                                <Route path="/details/:productId" element={<ProductDetails />} />
                                 <Route
                                     path="*"
                                     element={

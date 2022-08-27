@@ -59,6 +59,22 @@ export const MenuItemTitle = styled.span`
     line-height: 19.2px;
     text-transform: uppercase;
     cursor: pointer;
+    & a:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 export const Mask = styled.div`
