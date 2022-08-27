@@ -18,11 +18,19 @@ const Button = styled.div`
     text-transform: uppercase;
     color: ${Colors.text_white};
     cursor: pointer;
+    margin-right: ${(props) => props.mr || `0px`};
+    margin-left: ${(props) => props.ml || `0px`};
+    margin-bottom: ${(props) => props.mb || `0px`};
+    margin-top: ${(props) => props.mt || `0px`};
 `;
 
 export default class PrimaryButton extends Component {
     render() {
-        const { title, onClick } = this.props;
-        return <Button onClick={onClick}>{title}</Button>;
+        const { title, onClick, mr, ml, mt, width, mb, height } = this.props;
+        return (
+            <Button mr={mr} ml={ml} mt={mt} mb={mb} width={width} height={height} onClick={onClick}>
+                {title}
+            </Button>
+        );
     }
 }

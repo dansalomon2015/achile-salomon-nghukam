@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { getProductDetails } from "../../api";
 import { Images } from "../../assets";
 import { addProduct } from "../../store";
@@ -34,6 +35,7 @@ class ProductCard extends Component {
     addIt(id) {
         const { cart } = this.props;
 
+        //Read Product details from local cart
         let productData = undefined;
         cart.forEach((p) => {
             if (p.id === id) productData = p;
@@ -56,7 +58,9 @@ class ProductCard extends Component {
                 <ImgContainer src={gallery[0]} />
                 <ProductInfo>
                     <ProductName>
-                        {brand} {name}
+                        <Link to={`details/${id}`}>
+                            {brand} {name}
+                        </Link>
                     </ProductName>
                     <div>
                         {currency && (

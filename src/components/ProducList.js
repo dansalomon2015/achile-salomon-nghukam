@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { getProductsByCategory } from "../api";
 import { Images } from "../assets";
@@ -18,22 +17,6 @@ const List = styled.div`
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
-    & a:hover {
-        text-decoration: none;
-        color: inherit;
-    }
-    & a:focus {
-        text-decoration: none;
-        color: inherit;
-    }
-    & a:active {
-        text-decoration: none;
-        color: inherit;
-    }
-    & a {
-        text-decoration: none;
-        color: inherit;
-    }
 `;
 
 const CategoryName = styled.div`
@@ -99,11 +82,7 @@ class ProductList extends PureComponent {
                     <ErrorBoundary message="Error in PLP">
                         <List>
                             {this.state.products.map((item, index) => {
-                                return (
-                                    <Link to={`/details/${item.id}`}>
-                                        <ProductCard key={index + 1} index={index} {...item} />
-                                    </Link>
-                                );
+                                return <ProductCard key={index + 1} index={index} {...item} />;
                             })}
                         </List>
                     </ErrorBoundary>

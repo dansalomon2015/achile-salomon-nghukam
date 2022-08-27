@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Colors } from "../../utils";
 
 const Container = styled.div`
-    min-width: 20px;
-    height: 20px;
+    min-width: ${(props) => props.width || `20px`};
+    height: ${(props) => props.width || `20px`};
     padding: 2px;
     border-width: 1px;
     border-color: ${(props) => (props.selected ? Colors.primary : Colors.bg_white)};
@@ -20,9 +20,9 @@ const Color = styled.div`
 
 export default class ColorsButton extends Component {
     render() {
-        const { color, selected, onClick } = this.props;
+        const { color, selected, onClick, width } = this.props;
         return (
-            <Container selected={selected} onClick={onClick}>
+            <Container selected={selected} width={width} onClick={onClick}>
                 <Color bgColor={color} />
             </Container>
         );

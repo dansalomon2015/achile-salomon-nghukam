@@ -11,7 +11,6 @@ export const Card = styled.div`
         -webkit-box-shadow: 10px 5px 33px 5px rgba(0, 0, 0, 0.22);
         box-shadow: 10px 5px 33px 5px rgba(0, 0, 0, 0.22);
     }
-    cursor: pointer;
 `;
 
 export const ProductImage = styled.img`
@@ -22,6 +21,22 @@ export const ProductName = styled.span`
     font-size: 18px;
     line-height: 160%;
     font-weight: 300;
+    & a:hover {
+        text-decoration: none;
+        color: ${Colors.primary};
+    }
+    & a:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 export const ProductPrice = styled.span`
@@ -61,7 +76,7 @@ export const ProductInfo = styled.div`
 export const ImgContainer = styled.div`
     background-image: ${(props) => `url("${props.src}")`};
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     width: 350px;
     height: 330px;

@@ -110,8 +110,13 @@ class Navbar extends PureComponent {
                     </Actions>
                 </Wrapper>
 
-                <ErrorBoundary message="An error occurs wuth the shooping bag">
-                    {this.state.shoppingBagVisible && <ShoppingBag innerRef={this.shoppingBagRef} />}
+                <ErrorBoundary message="An error occurs with the shooping bag">
+                    {this.state.shoppingBagVisible && (
+                        <ShoppingBag
+                            innerRef={this.shoppingBagRef}
+                            hide={() => this.setState({ shoppingBagVisible: false })}
+                        />
+                    )}
                 </ErrorBoundary>
 
                 {this.state.shoppingBagVisible && <Mask />}

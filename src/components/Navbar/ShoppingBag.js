@@ -56,7 +56,7 @@ class ShoppingBag extends Component {
     };
 
     render() {
-        const { cart, currency } = this.props;
+        const { cart, currency, hide } = this.props;
         return (
             <ShoppingBagContainer ref={this.props.innerRef}>
                 <Content>
@@ -91,10 +91,10 @@ class ShoppingBag extends Component {
                     </TotalContainer>
 
                     <ButtonsContainer>
-                        <SecondaryButton>
+                        <SecondaryButton onClick={hide} mr={"5px"}>
                             <Link to={"/cart"}>View bag</Link>
                         </SecondaryButton>
-                        <PrimaryButton title="CHECKOUT" />
+                        <PrimaryButton ml={"5px"} title="CHECKOUT" />
                     </ButtonsContainer>
                 </Content>
             </ShoppingBagContainer>
@@ -115,12 +115,13 @@ class ShoppingBagItem extends Component {
     };
 
     render() {
-        const { currency, qty, price, increment, decrement, attributes, gallery, updateItemAttribute } = this.props;
+        const { currency, qty, price, increment, decrement, attributes, gallery, updateItemAttribute, brand, name } =
+            this.props;
         return (
             <ShoppingBagBody>
                 <ItemDetails>
-                    <ItemName>Apollo</ItemName>
-                    <ItemName>Running Short</ItemName>
+                    <ItemName>{brand}</ItemName>
+                    <ItemName>{name}</ItemName>
                     <ItemPrice>
                         {currency ? currency.symbol : ""}
                         {price}
@@ -129,7 +130,7 @@ class ShoppingBagItem extends Component {
                     {attributes.map((attribute, i) => {
                         return (
                             <div key={i + 1}>
-                                <SectionTitle>{attribute.name}</SectionTitle>
+                                <SectionTitle>{attribute.name}:</SectionTitle>
                                 <Section>
                                     {attribute.items.map((item, j) => {
                                         if (attribute.type === "swatch")
