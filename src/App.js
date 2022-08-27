@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { PersistGate } from "reduxjs-toolkit-persist/integration/react";
-import { persistor, store } from "./store";
+import { Outlet } from "react-router-dom";
 import { Colors } from "./utils";
 import styled from "styled-components";
-import { Home, ProductDetails, Cart } from "./pages";
-import { Provider } from "react-redux";
+import { Navbar } from "./components";
+import Loader from "./components/Navbar/Loader";
 
 const Container = styled.div`
     padding-inline: 80px;
@@ -16,27 +14,11 @@ const Container = styled.div`
 export default class App extends Component {
     render() {
         return (
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Container>
-                        <BrowserRouter>
-                            <Routes>
-                                <Route path="/" element={<Home />} />
-                                <Route path="/cart" element={<Cart />} />
-                                <Route path="/details/:productId" element={<ProductDetails />} />
-                                <Route
-                                    path="*"
-                                    element={
-                                        <main style={{ padding: "1rem", marginTop: "100px" }}>
-                                            <p>There's nothing here!</p>
-                                        </main>
-                                    }
-                                />
-                            </Routes>
-                        </BrowserRouter>
-                    </Container>
-                </PersistGate>
-            </Provider>
+            <Container>
+                <Navbar />
+                <Outlet />
+                <Loader />
+            </Container>
         );
     }
 }

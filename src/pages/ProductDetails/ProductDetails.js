@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Navbar } from "../../components";
 
 export default class ProductDetails extends Component {
     componentDidMount() {
@@ -7,10 +6,6 @@ export default class ProductDetails extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Navbar />
-            </div>
-        );
+        return <div>rgrg</div>;
     }
 }
