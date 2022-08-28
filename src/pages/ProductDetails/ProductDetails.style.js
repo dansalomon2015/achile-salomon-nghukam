@@ -97,3 +97,10 @@ export const Description = styled.div`
     font-size: 16px;
     line-height: 159.96%;
 `;
+
+export const NotFound = styled.div`
+    display: flex;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+`;

@@ -16,6 +16,7 @@ import {
     Brand,
     AttributesContainer,
     Description,
+    NotFound,
 } from "./ProductDetails.style";
 import parse from "html-react-parser";
 import { addProduct } from "../../store";
@@ -45,14 +46,22 @@ class ProductDetails extends Component {
     componentDidMount() {
         const link = window.location.pathname.split("/");
         const productId = link[link.length - 1];
-        getProductDetails(productId).then((data) => {
-            let product = data.product;
-            product.qty = 1;
-            product.attributes.forEach((attr) => {
-                product[attr.name] = attr.items[0].value;
+        getProductDetails(productId)
+            .then((data) => {
+                let product = data.product;
+
+                if (product) {
+                    product.qty = 1;
+                    product.attributes.forEach((attr) => {
+                        product[attr.name] = attr.items[0].value;
+                    });
+                    this.setState({ product: product, selectedImg: product.gallery[0] });
+                }
+                this.setState({ loading: false });
+            })
+            .catch((e) => {
+                this.setState({ loading: false });
             });
-            this.setState({ product: product, loading: false, selectedImg: product.gallery[0] });
-        });
     }
 
     getPrice() {
@@ -149,6 +158,8 @@ class ProductDetails extends Component {
                 </Container>
             );
         }
+
+        if (!this.state.loading && !this.state.product) return <NotFound>Product Not found !</NotFound>;
 
         return null;
     }

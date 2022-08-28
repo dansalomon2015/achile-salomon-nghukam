@@ -76,7 +76,7 @@ export const ProductInfo = styled.div`
 export const ImgContainer = styled.div`
     background-image: ${(props) => `url("${props.src}")`};
     background-position: center;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     width: 350px;
     height: 330px;

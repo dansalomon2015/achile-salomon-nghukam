@@ -108,8 +108,7 @@ export const ShoppingBagContainer = styled.div`
 export const ShoppingBagBody = styled.div`
     flex-direction: row;
     display: flex;
-    margin-top: 24px;
-    align-items: center;
+    margin-top: 50px;
     padding-inline: 14px;
 `;
 
@@ -147,7 +146,7 @@ export const QtyContainer = styled.div`
     justify-content: space-between;
     flex-direction: column;
     margin-right: 14px;
-    height: 180px;
+    min-height: 180px;
 `;
 
 export const Qty = styled.span`
@@ -160,10 +159,10 @@ export const Qty = styled.span`
 
 export const ItemImgContainer = styled.div`
     width: 100px;
-    height: 172px;
+    min-height: 172px;
     background-image: ${(props) => `url("${props.src}")`};
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     color: ${Colors.dark};
 `;
