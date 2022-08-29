@@ -4,8 +4,8 @@ import { Colors } from "../../utils";
 export const QtyButton = styled.button`
     background-color: ${Colors.bg_white};
     border: 1px solid ${Colors.dark};
-    width: 24px;
-    height: 24px;
+    width: ${(props) => props.width || `24px`};
+    height: ${(props) => props.width || `24px`};
     justify-content: center;
     align-items: center;
     display: flex;

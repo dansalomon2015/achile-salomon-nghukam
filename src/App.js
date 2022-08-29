@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Outlet } from "react-router-dom";
 import { Colors } from "./utils";
 import styled from "styled-components";
-import { Navbar } from "./components";
-import Loader from "./components/Navbar/Loader";
+import { Loader, Navbar } from "./components";
 
 const Container = styled.div`
     padding-inline: 80px;

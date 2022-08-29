@@ -68,7 +68,7 @@ class ShoppingBag extends Component {
                         return (
                             <ShoppingBagItem
                                 {...item}
-                                key={index + 1}
+                                key={index}
                                 increment={() => this.increment(index)}
                                 decrement={() => this.decrement(index)}
                                 price={this.getPrice(item)}
@@ -103,13 +103,6 @@ class ShoppingBag extends Component {
 }
 
 class ShoppingBagItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            size: "S",
-        };
-    }
-
     getAttributeValue = (value) => {
         return this.props[value];
     };
@@ -136,7 +129,7 @@ class ShoppingBagItem extends Component {
                                         if (attribute.type === "swatch")
                                             return (
                                                 <ColorsButton
-                                                    key={j + 1}
+                                                    key={j}
                                                     color={item.value}
                                                     selected={item.value === this.getAttributeValue(attribute.name)}
                                                     onClick={() => updateItemAttribute(attribute.name, item.value)}
@@ -145,7 +138,7 @@ class ShoppingBagItem extends Component {
                                         return (
                                             <ButtonSizes
                                                 selected={item.value === this.getAttributeValue(attribute.name)}
-                                                key={j + 1}
+                                                key={j}
                                                 onClick={() => updateItemAttribute(attribute.name, item.value)}
                                             >
                                                 {item.value}

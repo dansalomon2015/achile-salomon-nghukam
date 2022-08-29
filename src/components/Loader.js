@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { getCategories, getCurrencies } from "../../api";
-import { storeCategories, storeCurrencies } from "../../store";
-import { Colors } from "../../utils";
+import { getCategories, getCurrencies } from "../api";
+import { storeCategories, storeCurrencies } from "../store";
+import { Colors } from "../utils";
 
 export const Mask = styled.div`
     background-color: ${Colors.bg_white};

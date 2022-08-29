@@ -89,7 +89,7 @@ class ProductDetails extends Component {
                                     <GalleryItem
                                         selected={img === this.state.selectedImg}
                                         src={img}
-                                        key={index + 1}
+                                        key={index}
                                         onClick={() => {
                                             this.setState({ selectedImg: img });
                                         }}
@@ -112,7 +112,7 @@ class ProductDetails extends Component {
                                             if (attribute.type === "swatch")
                                                 return (
                                                     <ColorsButton
-                                                        key={j + 1}
+                                                        key={j}
                                                         color={item.value}
                                                         selected={item.value === this.getAttributeValue(attribute.name)}
                                                         onClick={() => this.updateAttribute(attribute.name, item.value)}
@@ -122,7 +122,7 @@ class ProductDetails extends Component {
                                             return (
                                                 <ButtonSizes
                                                     selected={item.value === this.getAttributeValue(attribute.name)}
-                                                    key={j + 1}
+                                                    key={j}
                                                     onClick={() => this.updateAttribute(attribute.name, item.value)}
                                                     minWidth={`60px`}
                                                     height={`40px`}

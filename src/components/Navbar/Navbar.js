@@ -71,7 +71,7 @@ class Navbar extends PureComponent {
                             {categories.map((c, index) => {
                                 return (
                                     <MenuItem
-                                        key={index + 1}
+                                        key={index}
                                         active={c.name === category.name}
                                         onClick={() => {
                                             this.props.dispatch(selecteCategory(c));

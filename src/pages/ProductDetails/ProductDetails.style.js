@@ -68,7 +68,8 @@ export const SectionTitle = styled.span`
     font-size: 18px;
     line-height: 18px;
     color: ${Colors.dark};
-    font-family: "Roboto";
+    font-family: "Roboto Condesed";
+    text-transform: uppercase;
 `;
 
 export const Section = styled.div`

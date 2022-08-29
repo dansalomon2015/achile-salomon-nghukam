@@ -6,6 +6,7 @@ import appSlice from "./reducer";
 const persistConfig = {
     key: "root",
     storage: storage,
+    timeout: 1,
 };
 
 const reducers = combineReducers({
