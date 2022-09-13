@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { ButtonSizes, ColorsButton, QtyButton } from "../Buttons";
 import {
     ItemDetails,
@@ -17,7 +17,7 @@ import {
     ControlRight,
 } from "./CartItem.style";
 
-export default class CartItem extends Component {
+export default class CartItem extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -104,10 +104,12 @@ export default class CartItem extends Component {
                         </QtyButton>
                     </QtyContainer>
                     <ItemImgContainer src={gallery[this.state.imgIndex]}>
-                        <ControlsContainer>
-                            <ControlLeft onClick={this.previousImg} />
-                            <ControlRight onClick={this.nextImg} />
-                        </ControlsContainer>
+                        {gallery.length > 1 && (
+                            <ControlsContainer>
+                                <ControlLeft onClick={this.previousImg} />
+                                <ControlRight onClick={this.nextImg} />
+                            </ControlsContainer>
+                        )}
                     </ItemImgContainer>
                 </ItemDetail>
             </Container>

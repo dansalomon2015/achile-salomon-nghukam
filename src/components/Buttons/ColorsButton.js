@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Colors } from "../../utils";
 
@@ -9,7 +9,7 @@ const Container = styled.div`
     border-width: 1px;
     border-color: ${(props) => (props.selected ? Colors.primary : Colors.bg_white)};
     border-style: solid;
-    cursor: pointer;
+    cursor: ${(props) => (props.onClick ? `pointer` : `auto`)};
     margin-right: 5px;
 `;
 const Color = styled.div`
@@ -18,7 +18,7 @@ const Color = styled.div`
     background-color: ${(props) => props.bgColor};
 `;
 
-export default class ColorsButton extends Component {
+export default class ColorsButton extends PureComponent {
     render() {
         const { color, selected, onClick, width } = this.props;
         return (

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { CartItem, PrimaryButton } from "../../components";
 import { decrementQty, incrementQty, updateAttribute } from "../../store";
 import { Container, List, NoItems, Row, RowTitle, RowValue, Title } from "./Cart.style";
 
-class Cart extends Component {
+class Cart extends PureComponent {
     decrement = (itemIndex) => {
         const { dispatch } = this.props;
         dispatch(decrementQty(itemIndex));
@@ -25,9 +25,12 @@ class Cart extends Component {
 
     getPrice(item) {
         const { prices } = item;
-        const { currency } = this.props;
-        if (!currency) return "";
-        return prices.find((p) => p.currency.label === currency.label).amount;
+        const {
+            currency: { label },
+        } = this.props;
+        if (!label) return "";
+
+        return prices.find((p) => p.currency.label === label).amount;
     }
 
     updateItemAttribute = (attrName, value, index) => {
@@ -85,24 +88,26 @@ class Cart extends Component {
                 </List>
 
                 <table>
-                    <Row>
-                        <RowTitle>Tax 21%:</RowTitle>
-                        <RowValue>
-                            {crcy}
-                            {this.evaluateTax()}
-                        </RowValue>
-                    </Row>
-                    <Row>
-                        <RowTitle>Quantity:</RowTitle>
-                        <RowValue>{this.countItems()}</RowValue>
-                    </Row>
-                    <Row>
-                        <RowTitle fontWeight={`500`}>Total:</RowTitle>
-                        <RowValue>
-                            {crcy}
-                            {this.evaluateTotal()}
-                        </RowValue>
-                    </Row>
+                    <tbody>
+                        <Row>
+                            <RowTitle>Tax 21%:</RowTitle>
+                            <RowValue>
+                                {crcy}
+                                {this.evaluateTax()}
+                            </RowValue>
+                        </Row>
+                        <Row>
+                            <RowTitle>Quantity:</RowTitle>
+                            <RowValue>{this.countItems()}</RowValue>
+                        </Row>
+                        <Row>
+                            <RowTitle fontWeight={`500`}>Total:</RowTitle>
+                            <RowValue>
+                                {crcy}
+                                {this.evaluateTotal()}
+                            </RowValue>
+                        </Row>
+                    </tbody>
                 </table>
                 <PrimaryButton mt={`20px`} width={`250px`} title="ORDER" />
             </Container>

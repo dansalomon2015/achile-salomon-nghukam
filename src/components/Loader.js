@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { getCategories, getCurrencies } from "../api";
@@ -19,7 +19,7 @@ export const Mask = styled.div`
     align-items: center;
 `;
 
-class Loader extends Component {
+class Loader extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -52,9 +52,9 @@ class Loader extends Component {
     }
 
     render() {
-        if (!this.state.currenciesLoaded || !this.state.categoriesLoaded) return <Mask>Loading...</Mask>;
+        if (this.state.currenciesLoaded && this.state.categoriesLoaded) return null;
 
-        return null;
+        return <Mask>Loading...</Mask>;
     }
 }
 

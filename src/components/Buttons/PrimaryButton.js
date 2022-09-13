@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Colors } from "../../utils";
 
@@ -24,7 +24,7 @@ const Button = styled.div`
     margin-top: ${(props) => props.mt || `0px`};
 `;
 
-export default class PrimaryButton extends Component {
+export default class PrimaryButton extends PureComponent {
     render() {
         const { title, onClick, mr, ml, mt, width, mb, height } = this.props;
         return (

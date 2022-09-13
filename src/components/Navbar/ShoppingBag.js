@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import { PrimaryButton, SecondaryButton, ColorsButton, QtyButton, ButtonSizes } from "../Buttons";
 import {
@@ -23,9 +23,9 @@ import {
     NoItems,
 } from "./Navbar.style";
 import { connect } from "react-redux";
-import { decrementQty, incrementQty, updateAttribute } from "../../store";
+import { decrementQty, incrementQty } from "../../store";
 
-class ShoppingBag extends Component {
+class ShoppingBag extends PureComponent {
     decrement = (itemIndex) => {
         const { dispatch } = this.props;
         dispatch(decrementQty(itemIndex));
@@ -46,19 +46,17 @@ class ShoppingBag extends Component {
 
     getPrice(item) {
         const { prices } = item;
-        const { currency } = this.props;
-        if (!currency) return "";
-        return prices.find((p) => p.currency.label === currency.label).amount;
+        const {
+            currency: { label },
+        } = this.props;
+        if (!label) return "";
+        return prices.find((p) => p.currency.label === label).amount;
     }
 
-    updateItemAttribute = (attrName, value, index) => {
-        this.props.dispatch(updateAttribute({ attrName, value, productIndex: index }));
-    };
-
     render() {
-        const { cart, currency, hide } = this.props;
+        const { cart, currency, hide, innerRef } = this.props;
         return (
-            <ShoppingBagContainer ref={this.props.innerRef}>
+            <ShoppingBagContainer ref={innerRef}>
                 <Content>
                     <MyBagText>My Bag</MyBagText>
                     <NbrOfItemText>{cart.length} items</NbrOfItemText>
@@ -91,9 +89,12 @@ class ShoppingBag extends Component {
                     </TotalContainer>
 
                     <ButtonsContainer>
-                        <SecondaryButton onClick={hide} mr={"5px"}>
-                            <Link to={"/cart"}>View bag</Link>
-                        </SecondaryButton>
+                        <Link to={"/cart"}>
+                            <SecondaryButton onClick={hide} mr={"5px"}>
+                                View bag
+                            </SecondaryButton>
+                        </Link>
+
                         <PrimaryButton ml={"5px"} title="CHECKOUT" />
                     </ButtonsContainer>
                 </Content>
@@ -102,14 +103,13 @@ class ShoppingBag extends Component {
     }
 }
 
-class ShoppingBagItem extends Component {
+class ShoppingBagItem extends PureComponent {
     getAttributeValue = (value) => {
         return this.props[value];
     };
 
     render() {
-        const { currency, qty, price, increment, decrement, attributes, gallery, updateItemAttribute, brand, name } =
-            this.props;
+        const { currency, qty, price, increment, decrement, attributes, gallery, brand, name } = this.props;
         return (
             <ShoppingBagBody>
                 <ItemDetails>
@@ -132,14 +132,12 @@ class ShoppingBagItem extends Component {
                                                     key={j}
                                                     color={item.value}
                                                     selected={item.value === this.getAttributeValue(attribute.name)}
-                                                    onClick={() => updateItemAttribute(attribute.name, item.value)}
                                                 />
                                             );
                                         return (
                                             <ButtonSizes
                                                 selected={item.value === this.getAttributeValue(attribute.name)}
                                                 key={j}
-                                                onClick={() => updateItemAttribute(attribute.name, item.value)}
                                             >
                                                 {item.value}
                                             </ButtonSizes>

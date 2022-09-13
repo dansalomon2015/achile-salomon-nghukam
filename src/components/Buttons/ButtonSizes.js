@@ -10,7 +10,7 @@ const ButtonSizes = styled.button`
     align-items: center;
     display: flex;
     font-size: ${(props) => props.fontSize || `14px`};
-    cursor: pointer;
+    cursor: ${(props) => (props.onClick ? `pointer` : `auto`)};
     margin-right: 8px;
     color: ${(props) => (props.selected ? Colors.text_white : Colors.dark)};
     font-family: "Source Sans Pro";

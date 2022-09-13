@@ -197,6 +197,22 @@ export const ButtonsContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-top: 30px;
+    & a:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    & a {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 export const TotalContainer = styled.div`

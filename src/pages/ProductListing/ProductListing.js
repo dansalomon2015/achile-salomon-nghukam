@@ -10,11 +10,9 @@ const Container = styled.div`
 `;
 
 const List = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, calc(100% / 3));
 `;
 
 const CategoryName = styled.div`
@@ -44,10 +42,14 @@ class ProductListing extends PureComponent {
         };
     }
 
-    loadProduct(categoryName) {
+    loadProduct() {
         this.setState({ loading: true });
+        const { category } = this.props;
 
-        getProductsByCategory(categoryName).then((data) => {
+        if (!category) return;
+        const { name } = category;
+
+        getProductsByCategory(name).then((data) => {
             this.setState({ loading: false });
             try {
                 if (Array.isArray(data.category.products)) {
@@ -57,13 +59,18 @@ class ProductListing extends PureComponent {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.loadProduct(nextProps.category.name);
+    componentDidUpdate(preProps) {
+        const { category } = this.props;
+        if (!category) return;
+
+        const { name } = category;
+        if (preProps.category.name === name) return;
+
+        this.loadProduct();
     }
 
     componentDidMount() {
-        const { category } = this.props;
-        if (category) this.loadProduct(category.name);
+        this.loadProduct();
     }
 
     render() {

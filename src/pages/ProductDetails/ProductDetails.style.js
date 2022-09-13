@@ -23,17 +23,25 @@ export const GalleryItemsContainer = styled.div`
 `;
 
 export const GalleryItem = styled.div`
+    width: 90px;
+    height: 90px;
+    border-color: ${(props) => (props.selected ? `${Colors.primary}` : `${Colors.text_white}`)};
+    margin-bottom: 30px;
+    border-width: 2px;
+    border-style: solid;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const GalleryItemContent = styled.div`
     width: 85px;
     height: 85px;
     background-image: ${(props) => `url("${props.src}")`};
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    border-color: ${(props) => (props.selected ? `${Colors.primary}` : `${Colors.text_white}`)};
-    margin-bottom: 30px;
-    border-width: 2px;
-    border-style: solid;
-    cursor: pointer;
 `;
 
 export const ImgViewer = styled.div`

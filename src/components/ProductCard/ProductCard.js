@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProductDetails } from "../../api";
@@ -13,9 +13,10 @@ import {
     CartIcon,
     ProductInfo,
     ImgContainer,
+    OutOfStock,
 } from "./ProductCard.style";
 
-class ProductCard extends Component {
+class ProductCard extends PureComponent {
     getPrice() {
         const { prices, currency } = this.props;
         if (!currency) return "";
@@ -52,29 +53,31 @@ class ProductCard extends Component {
     }
 
     render() {
-        const { brand, name, gallery, currency, id } = this.props;
+        const { brand, name, gallery, currency, id, inStock } = this.props;
         return (
             <Card id="card">
-                <ImgContainer src={gallery[0]} />
-                <ProductInfo>
-                    <ProductName>
-                        <Link to={`details/${id}`}>
+                <Link to={`details/${id}`}>
+                    <ImgContainer src={gallery[0]}>{!inStock && <OutOfStock>Out of stock</OutOfStock>}</ImgContainer>
+                    <ProductInfo>
+                        <ProductName>
                             {brand} {name}
-                        </Link>
-                    </ProductName>
-                    <div>
-                        {currency && (
-                            <ProductPrice>
-                                {currency.symbol}
-                                {this.getPrice()}
-                            </ProductPrice>
-                        )}
-                    </div>
-                </ProductInfo>
+                        </ProductName>
+                        <div>
+                            {currency && (
+                                <ProductPrice>
+                                    {currency.symbol}
+                                    {this.getPrice()}
+                                </ProductPrice>
+                            )}
+                        </div>
+                    </ProductInfo>
+                </Link>
 
-                <AddToCardIcon onClick={() => this.addIt(id)}>
-                    <CartIcon src={Images.Cart} alt="dress" color={Colors.text_white} />
-                </AddToCardIcon>
+                {inStock && (
+                    <AddToCardIcon onClick={() => this.addIt(id)}>
+                        <CartIcon src={Images.Cart} alt="dress" color={Colors.text_white} />
+                    </AddToCardIcon>
+                )}
             </Card>
         );
     }

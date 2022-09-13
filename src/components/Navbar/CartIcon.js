@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Images } from "../../assets";
 import { Colors } from "../../utils";
@@ -28,7 +28,7 @@ const Counter = styled.div`
     justify-content: center;
 `;
 
-export default class CartIcon extends Component {
+export default class CartIcon extends PureComponent {
     render() {
         const { count, onClick, innerRef } = this.props;
         return (

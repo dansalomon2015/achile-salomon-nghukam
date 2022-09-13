@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Colors } from "../../utils";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ const Container = styled.div`
     cursor: pointer;
 `;
 
-class CurrencyItem extends Component {
+class CurrencyItem extends PureComponent {
     constructor(props) {
         super(props);
         this.changeCurrency = this.changeCurrency.bind(this);

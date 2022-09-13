@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Colors } from "../../utils";
 
@@ -39,7 +39,7 @@ const Button = styled.div`
     }
 `;
 
-export default class SecondaryButton extends Component {
+export default class SecondaryButton extends PureComponent {
     render() {
         const { title, onClick, children, mr, ml } = this.props;
         return (

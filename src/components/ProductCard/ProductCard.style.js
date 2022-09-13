@@ -4,27 +4,16 @@ import { Colors } from "../../utils";
 export const Card = styled.div`
     position: relative;
     padding: 14px;
-    max-width: 390px;
     margin-top: 100px;
-    /* border: 1px solid black; */
     &:hover {
         -webkit-box-shadow: 10px 5px 33px 5px rgba(0, 0, 0, 0.22);
         box-shadow: 10px 5px 33px 5px rgba(0, 0, 0, 0.22);
     }
-`;
-
-export const ProductImage = styled.img`
-    height: auto;
-`;
-
-export const ProductName = styled.span`
-    font-size: 18px;
-    line-height: 160%;
-    font-weight: 300;
-    & a:hover {
-        text-decoration: none;
-        color: ${Colors.primary};
-    }
+    margin-inline: 10%;
+    // & a:hover {
+    //     text-decoration: none;
+    //     color: ${Colors.primary};
+    // }
     & a:focus {
         text-decoration: none;
         color: inherit;
@@ -37,6 +26,16 @@ export const ProductName = styled.span`
         text-decoration: none;
         color: inherit;
     }
+`;
+
+export const ProductImage = styled.img`
+    height: auto;
+`;
+
+export const ProductName = styled.span`
+    font-size: 18px;
+    line-height: 160%;
+    font-weight: 300;
 `;
 
 export const ProductPrice = styled.span`
@@ -78,6 +77,16 @@ export const ImgContainer = styled.div`
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    width: 350px;
+    width: 100%;
     height: 330px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const OutOfStock = styled.p`
+    font-size: 24px;
+    line-height: 160%;
+    color: ${Colors.bg_grey};
+    text-transform: uppercase;
 `;

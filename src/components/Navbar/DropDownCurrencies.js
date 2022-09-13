@@ -36,15 +36,14 @@ export default class DropDownCurrencies extends PureComponent {
     render() {
         const { visible, innerRef, currencies } = this.props;
 
-        if (visible && currencies)
-            return (
-                <Container ref={innerRef}>
-                    {currencies.map((e, i) => {
-                        return <CurrencyItem key={i + 1} selected={i === this.getSelectedIndex()} item={e} />;
-                    })}
-                </Container>
-            );
+        if (!visible || !currencies) return null;
 
-        return null;
+        return (
+            <Container ref={innerRef}>
+                {currencies.map((e, i) => {
+                    return <CurrencyItem key={i + 1} selected={i === this.getSelectedIndex()} item={e} />;
+                })}
+            </Container>
+        );
     }
 }

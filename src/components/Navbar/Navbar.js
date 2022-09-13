@@ -61,30 +61,38 @@ class Navbar extends PureComponent {
             }
     }
 
+    renderMenu = (categories, name) => {
+        if (!categories) return null;
+
+        return (
+            <>
+                <Menu>
+                    {categories.map((c, index) => {
+                        return (
+                            <MenuItem
+                                key={index}
+                                active={c.name === name}
+                                onClick={() => {
+                                    this.props.dispatch(selecteCategory(c));
+                                }}
+                            >
+                                <MenuItemTitle active={c.name === name}>
+                                    <Link to={"/"}>{c.name}</Link>
+                                </MenuItemTitle>
+                            </MenuItem>
+                        );
+                    })}
+                </Menu>
+            </>
+        );
+    };
+
     render() {
         const { categories, category } = this.props;
         return (
             <Container>
                 <Wrapper>
-                    {categories && (
-                        <Menu>
-                            {categories.map((c, index) => {
-                                return (
-                                    <MenuItem
-                                        key={index}
-                                        active={c.name === category.name}
-                                        onClick={() => {
-                                            this.props.dispatch(selecteCategory(c));
-                                        }}
-                                    >
-                                        <MenuItemTitle active={c.name === category.name}>
-                                            <Link to={"/"}>{c.name}</Link>
-                                        </MenuItemTitle>
-                                    </MenuItem>
-                                );
-                            })}
-                        </Menu>
-                    )}
+                    {this.renderMenu(categories, category ? category.name : "")}
                     <LogoContainer>
                         <Link
                             to={{

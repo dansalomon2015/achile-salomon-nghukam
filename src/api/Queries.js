@@ -29,6 +29,7 @@ export const GET_PRODUCTS_CATEGORY = `
                     amount
                 }
                 gallery
+                inStock
             }
         }
     }
@@ -57,6 +58,7 @@ export const GET_PRODUCT_DETAILS = `
                 }
             }
             gallery
+            inStock
         }
     }
 `;
