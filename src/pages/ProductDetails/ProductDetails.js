@@ -75,6 +75,28 @@ class ProductDetails extends PureComponent {
 
     addToCart() {
         const { dispatch } = this.props;
+        const { product } = this.state;
+        const { attributes } = product;
+
+        let attributesSeleceted = true;
+        let missingAttributeName = [];
+
+        attributes.forEach((attr) => {
+            const { name } = attr;
+            if (!product[name]) {
+                attributesSeleceted = false;
+                missingAttributeName.push(name);
+            }
+        });
+
+        if (!attributesSeleceted) {
+            return alert(
+                `Please select ${missingAttributeName.join(" | ")} attribute${
+                    missingAttributeName.length > 1 ? "s" : ""
+                }`
+            );
+        }
+
         dispatch(addProduct(this.state.product));
     }
 
