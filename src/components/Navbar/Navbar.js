@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Images } from "../../assets";
-import { selecteCategory } from "../../store";
+import { selectCategory } from "../../store";
 import ErrorBoundary from "../ErrorBoundary";
 import CartIcon from "./CartIcon";
 import DropDownHandler from "./DropDownHandler";
@@ -61,6 +61,25 @@ class Navbar extends PureComponent {
             }
     }
 
+    renderNavbarActions = () => {
+        return (
+            <Actions>
+                <DropDownHandler
+                    onClick={() => this.toggleCurrencyDialogVisibility()}
+                    dropdownVisible={this.state.dropdownVisible}
+                    innerRef={this.DropDownHandlerRef}
+                    dropDownRef={this.DropDownCurrenciesRef}
+                />
+
+                <CartIcon
+                    onClick={() => this.toggleShoppingBagVisibility()}
+                    count={this.props.cart.length}
+                    innerRef={this.cartIconRef}
+                />
+            </Actions>
+        );
+    };
+
     renderMenu = (categories, name) => {
         if (!categories) return null;
 
@@ -69,17 +88,16 @@ class Navbar extends PureComponent {
                 <Menu>
                     {categories.map((c, index) => {
                         return (
-                            <MenuItem
-                                key={index}
-                                active={c.name === name}
-                                onClick={() => {
-                                    this.props.dispatch(selecteCategory(c));
-                                }}
-                            >
-                                <MenuItemTitle active={c.name === name}>
-                                    <Link to={"/"}>{c.name}</Link>
-                                </MenuItemTitle>
-                            </MenuItem>
+                            <Link to={`/${c.name}`} key={index}>
+                                <MenuItem
+                                    active={c.name === name}
+                                    onClick={() => {
+                                        this.props.dispatch(selectCategory(c));
+                                    }}
+                                >
+                                    <MenuItemTitle active={c.name === name}>{c.name}</MenuItemTitle>
+                                </MenuItem>
+                            </Link>
                         );
                     })}
                 </Menu>
@@ -102,20 +120,7 @@ class Navbar extends PureComponent {
                             <img src={Images.Logo} alt="logo" />
                         </Link>
                     </LogoContainer>
-                    <Actions>
-                        <DropDownHandler
-                            onClick={() => this.toggleCurrencyDialogVisibility()}
-                            dropdownVisible={this.state.dropdownVisible}
-                            innerRef={this.DropDownHandlerRef}
-                            dropDownRef={this.DropDownCurrenciesRef}
-                        />
-
-                        <CartIcon
-                            onClick={() => this.toggleShoppingBagVisibility()}
-                            count={this.props.cart.length}
-                            innerRef={this.cartIconRef}
-                        />
-                    </Actions>
+                    {this.renderNavbarActions()}
                 </Wrapper>
 
                 <ErrorBoundary message="An error occurs with the shooping bag">

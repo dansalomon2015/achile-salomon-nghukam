@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { getProductsByCategory } from "../../api";
 import { ErrorBoundary, ProductCard } from "../../components";
+import { selectCategory } from "../../store";
 import { Colors } from "../../utils";
 
 const Container = styled.div`
@@ -59,12 +60,26 @@ class ProductListing extends PureComponent {
         });
     }
 
-    componentDidUpdate(preProps) {
-        const { category } = this.props;
-        if (!category) return;
+    componentDidUpdate(prevProps) {
+        const link = window.location.pathname.split("/");
+        const categoryName = link[link.length - 1];
 
-        const { name } = category;
-        if (preProps.category.name === name) return;
+        const { categories, dispatch } = this.props;
+
+        if (categories.length === 0) return;
+
+        let category = categoryName ? categories.find((c) => c.name === categoryName) : categories[0];
+
+        dispatch(selectCategory(category));
+
+        if (!category) {
+            return;
+        }
+
+        if (prevProps.category) {
+            const { name } = category;
+            if (prevProps.category.name === name) return;
+        }
 
         this.loadProduct();
     }
@@ -75,6 +90,8 @@ class ProductListing extends PureComponent {
 
     render() {
         const { category } = this.props;
+
+        if (!category) return <p>Page not found !</p>;
 
         return (
             <Container>
@@ -98,7 +115,7 @@ class ProductListing extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    return { category: state.mystore.category };
+    return { category: state.mystore.category, categories: state.mystore.categories };
 };
 
 export default connect(mapStateToProps)(ProductListing);

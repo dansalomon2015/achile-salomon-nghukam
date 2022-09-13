@@ -24,6 +24,10 @@ export const Menu = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    & a {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 export const LogoContainer = styled.div`
     flex: 1;
@@ -68,10 +72,6 @@ export const MenuItemTitle = styled.span`
         color: inherit;
     }
     & a:active {
-        text-decoration: none;
-        color: inherit;
-    }
-    & a {
         text-decoration: none;
         color: inherit;
     }

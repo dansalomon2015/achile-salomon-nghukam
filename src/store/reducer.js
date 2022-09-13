@@ -23,7 +23,7 @@ const appSlice = createSlice({
             state.categories = action.payload;
             if (!state.category) state.category = action.payload[0];
         },
-        selecteCategory: (state, action) => {
+        selectCategory: (state, action) => {
             state.category = action.payload;
         },
         addProduct: (state, action) => {
