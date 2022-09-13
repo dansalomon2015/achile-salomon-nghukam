@@ -56,7 +56,7 @@ class ProductCard extends PureComponent {
         const { brand, name, gallery, currency, id, inStock } = this.props;
         return (
             <Card id="card">
-                <Link to={`details/${id}`}>
+                <Link to={`/details/${id}`}>
                     <ImgContainer src={gallery[0]}>{!inStock && <OutOfStock>Out of stock</OutOfStock>}</ImgContainer>
                     <ProductInfo>
                         <ProductName>
